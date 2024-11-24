@@ -1,17 +1,13 @@
 import mysql from 'mysql2';
 
-// import dotenv from 'dotenv';
-
-// dotenv.config();
 
 
 var pool = mysql.createPool({
     host: 'localhost',
     port: '3306',
     user: 'root',
-    password: 'admin',
+    password: 'password123',
     database: 'voucher',
-    allowPublicKeyRetrieval: true
 });
 
 

@@ -10,10 +10,7 @@ const insertTableBrand = (brandName) => {
       getConnection()
         .then((connection) => {
           connection.query(
-            `INSERT INTO brand ` +
-              `(name, created_at) ` +
-              `VALUES(?, ?)`,
-            [brandName, getDate()],
+            `INSERT INTO brand (name, created_at) VALUES(?, ?)`, [brandName, getDate()],
             (error, elements) => {
               connection.release();
               if (error) {
@@ -32,10 +29,7 @@ const insertTableBrand = (brandName) => {
 router.post('/', async (req, res) => {
     try {
       const {brandName} = req.body;
-  
-    //   const dataToInsertPatient = {
-    //     NAME: brandName,
-    //   };
+
       await insertTableBrand(brandName);
   
       return res.status(200).send({
@@ -44,7 +38,7 @@ router.post('/', async (req, res) => {
       });
     } catch (error) {
       return res.status(400).send({
-        status: true,
+        status: false,
         message: error.message,
         data: null,
       });

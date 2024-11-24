@@ -26,4 +26,10 @@ const getDate = () =>{
     return nows;
 }
 
-export {getDate}
+function generateVoc() {
+    const randomNum = Math.floor(Math.random() * 10000);
+    const paddedNum = randomNum .toString().padStart(4, '0');
+    return `SALE${paddedNum}`;
+}
+
+export {getDate, generateVoc}
