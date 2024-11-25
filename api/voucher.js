@@ -5,13 +5,13 @@ import { getDate, generateVoc } from "../utils/utils.js";
 
 const router = express.Router();
 
-const insertTableVoucher = (brandId) => {
+const insertTableVoucher = (brandId, val) => {
     return new Promise((resolve, reject) => {
       getConnection()
         .then((connection) => {
           connection.query(
-            `INSERT INTO voucher(code, brand_id, created_at) VALUES(?, ?, ?)`,
-            [generateVoc(), brandId, getDate()],
+            `INSERT INTO voucher(code, brand_id, value, created_at) VALUES(?, ?, ?, ?)`,
+            [generateVoc(), brandId, val, getDate()],
             (error, elements) => {
               connection.release();
               if (error) {
@@ -74,14 +74,20 @@ const getVoucherByBrand = (id) => {
 
 router.post('/', async (req, res) => {
     try {
-      const {brandId} = req.body;
+      const {brandId, val} = req.body;
       if(!brandId){
         return res.status(400).send({
             status: false,
             message: "Brand Id can't be empty"
         })
       }
-      await insertTableVoucher(brandId);
+      if(!val){
+        return res.status(400).send({
+            status: false,
+            message: "Value disc can't be empty"
+        })
+      }
+      await insertTableVoucher(brandId, val);
       return res.status(200).send({
         status: true,
         message: 'Add Voucher success',
